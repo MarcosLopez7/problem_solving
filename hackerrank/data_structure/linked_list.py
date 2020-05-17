@@ -14,8 +14,8 @@ class SinglyLinkedList:
         self.size = 0
         self.empty = True
 
-    def push_back(self, node_data):
-        node = SinglyLinkedListNode(node_data)
+    def push_back(self, data):
+        node = SinglyLinkedListNode(data)
 
         if not self.head:
             self.head = node
@@ -110,9 +110,42 @@ class SinglyLinkedList:
 
             return node
 
-    def print_linked_list(self):
+    def print(self):
         node = self.head
 
         while node:
             print(node.data)
             node = node.next
+
+    def print_reversed(self):
+        self.__recursive_print(self.head)
+
+    def __recursive_print(self, node):
+        if node:
+            self.__recursive_print(node.next)
+            print(node.data)
+
+    def reverse(self):
+        if self.size > 1:
+            prev_tail = self.head
+            tail = self.head.next
+
+            while tail.next:
+                prev_tail, tail = tail, tail.next
+
+            tail.next = prev_tail
+            prev_tail.next = None
+
+            while self.head.next:
+                prev_node = self.head
+                node = self.head.next
+
+                while node.next:
+                    prev_node, node = node, node.next
+
+                prev_tail.next = prev_node
+                prev_node.next = None
+                prev_tail = prev_node
+
+            self.tail = self.head
+            self.head = tail
